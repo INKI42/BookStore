@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    
+        <title>Books</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="../Index.html">StoreBook</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:50030">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Authors.html">Author</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Books.html">Book</a>
+                </li>
+                <li class="nav-item  ">
+                    <a class="nav-link" href="Delete.html">DeleteBook</a>
+                </li>
+                <li class="nav-item active ">
+                    <a class="nav-link" href="Delete.html">DeleteAuthor</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <h3 class="text-center">Books</h3>
+        <hr />
+        <div class="row">
+            <div class="col-lg-10">
+                <label>Enter book id</label>
+                <input type="number" id="bookid"/>
+                <button class="btn btn-danger" id="delete">Delete</button>
+            </div>
+            </div>
+        <hr />
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            $('#delete').click(function () {
+                if (confirm('Do you really want to delete this book?')) {
+                    var id = $('#bookid').val();
+                    ajaxDeleteBook(id);
+                }
+            });
+
+            function ajaxDeleteBook(id) {
+
+                $.ajax({
+                    type: "DELETE",
+                    url: 'http://localhost:50030/api/books/' + id,
+                    success: function(result, statusText, xhr) {
+                        if (xhr.status === 200)
+                            alert('The book has been deleted!');
+                        window.location.replace("Books.html");
+                    },
+                    error: function(err) {
+                        alert('Bad request ' + err.status);
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
